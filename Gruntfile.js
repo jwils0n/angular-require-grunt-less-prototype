@@ -7,34 +7,44 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     clean: ['dist'],
+
     less: {
       options: {},
       target: {
         files: [
           {
             src: ['bower_components/bootstrap/less/bootstrap.less'],
-            dest: 'dist/.tmp/css/bootstrap.css'
+            dest: '.tmp/css/bootstrap.css'
           },
           {
             src: ['src/less/**/*.less'],
-            dest: 'dist/.tmp/css'
+            dest: '.tmp/css'
           }
         ]
       }
     },
+
     cssmin: {
       combine: {
         files: {
-          'dist/.tmp/css/main.css': ['dist/.tmp/css/**/*.css']
+          '.tmp/css/main.css': ['.tmp/css/**/*.css']
         }
       },
       minify: {
-        src: ['dist/.tmp/css/main.css'],
-        dest: 'dist/public/main.min.css'
+        src: ['.tmp/css/main.css'],
+        dest: 'dist/css/main.min.css'
+      }
+    },
+
+    copy: {
+      target: {
+        files: [
+          { src: ['src/index.html'], dest: 'dist/index.html' }
+        ]
       }
     }
 
   });
 
-  grunt.registerTask('build', ['clean', 'less', 'cssmin']);
+  grunt.registerTask('build', ['clean', 'less', 'cssmin', 'copy']);
 };

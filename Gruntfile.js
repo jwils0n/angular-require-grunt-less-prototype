@@ -6,7 +6,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
 
   grunt.initConfig({
-    clean: ['dist', '.tmp'],
+    clean: {
+      init: ['dist'],
+      cleanup: ['.tmp']
+    },
 
     less: {
       options: {},
@@ -17,7 +20,7 @@ module.exports = function(grunt) {
             dest: '.tmp/css/bootstrap.css'
           },
           {
-            src: ['src/less/**/*.less'],
+            src: ['assets/less/**/*.less'],
             dest: '.tmp/css'
           }
         ]
@@ -37,14 +40,26 @@ module.exports = function(grunt) {
     },
 
     copy: {
-      target: {
+      prepOptimize: {
         files: [
-          { src: ['src/index.html'], dest: 'dist/index.html' }
+          { src: ['bower_components/angular/angular.js'], dest: '.tmp/js/vendor/angular.js' },
+          { src: ['bower_components/jquery/jquery.js'], dest: '.tmp/js/vendor/jquery.js' },
+          { src: ['bower_components/bootstrap/dist/js/bootstrap.js'], dest: '.tmp/js/vendor/bootstrap.js' },
+          { src: ['bower_components/requirejs-hogan-plugin/hgn.js'], dest: '.tmp/js/vendor/hgn.js' },
+          { src: ['bower_components/requirejs-hogan-plugin/hogan.js'], dest: '.tmp/js/vendor/hogan.js' },
+          { src: ['bower_components/requirejs-hogan-plugin/text.js'], dest: '.tmp/js/vendor/text.js' },
+          { cwd: 'assets/', src: ['js/**/*.js'], dest: '.tmp/', expand: true }
+        ]
+      },
+      dist: {
+        files: [
+          { src: ['assets/index.html'], dest: 'dist/index.html' },
+          { src: ['bower_components/requirejs/require.js'], dest: 'dist/js/require.js' }
         ]
       }
     }
 
   });
 
-  grunt.registerTask('build', ['clean', 'less', 'cssmin', 'copy']);
+  grunt.registerTask('build', ['clean:init', 'less', 'cssmin', 'copy:prepOptimize', 'copy:dist', 'clean:cleanup']);
 };

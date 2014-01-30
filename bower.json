@@ -17,6 +17,7 @@
   "dependencies": {
     "angular": "~1.2.10",
     "requirejs": "~2.1.10",
-    "bootstrap": "~3.0.3"
+    "bootstrap": "~3.0.3",
+    "requirejs-hogan-plugin": "~0.3.1"
   }
 }

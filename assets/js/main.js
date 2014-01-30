@@ -1,18 +1,24 @@
-var require = {
-	baseUrl: '/'
-	, paths: {
-		nls: '../nls',
-		jquery: '../deps/libs/jquery/jquery',
-		bootstrap: '../deps/libs/bootstrap/dist/js/bootstrap',
-		hgn: '../deps/libs/requirejs-hogan-plugin/hgn',
-		text: '../deps/libs/requirejs-hogan-plugin/text',
-		hogan: '../deps/libs/hogan/hogan'
-	}
+require.config({
+	baseUrl: '',
 
-	// Shims
-	, shim: {
+	paths: {
+		nls: 'nls',
+		vendor: 'vendor',
+		angular: 'vendor/angular',
+		jquery: 'vendor/jquery',
+		bootstrap: 'vendor/bootstrap',
+		hgn: 'vendor/hgn',
+		text: 'vendor/text',
+		hogan: 'vendor/hogan'
+	},
+
+	shim: {
+		angular: {
+			exports: 'angular'
+		},
+
 		jquery: {
-			exports:'$'
+			exports: '$'
 		},
 
 		hogan: {
@@ -20,12 +26,13 @@ var require = {
 		},
 
 		bootstrap: ['jquery']
-	}
+	},
 
-	, hgn : {
+	hgn : {
 		templateExtension : '.tpl'
-	}
+	},
 
-	// Define timeout for require
-	, waitSeconds: 60
-};
+	waitSeconds: 60,
+
+	deps: ['app/bootstrap']
+});

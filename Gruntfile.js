@@ -4,6 +4,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-requirejs');
 
   grunt.initConfig({
     clean: {
@@ -48,7 +49,8 @@ module.exports = function(grunt) {
           { src: ['bower_components/requirejs-hogan-plugin/hgn.js'], dest: '.tmp/js/vendor/hgn.js' },
           { src: ['bower_components/requirejs-hogan-plugin/hogan.js'], dest: '.tmp/js/vendor/hogan.js' },
           { src: ['bower_components/requirejs-hogan-plugin/text.js'], dest: '.tmp/js/vendor/text.js' },
-          { cwd: 'assets/', src: ['js/**/*.js'], dest: '.tmp/', expand: true }
+          { src: ['bower_components/requirejs/require.js'], dest: '.tmp/js/require.js' },
+          { cwd: 'assets', src: ['js/**'], dest: '.tmp/', expand: true }
         ]
       },
       dist: {
@@ -57,9 +59,43 @@ module.exports = function(grunt) {
           { src: ['bower_components/requirejs/require.js'], dest: 'dist/js/require.js' }
         ]
       }
+    },
+
+    requirejs: {
+      compile: {
+        options: {
+          mainConfigFile: '.tmp/js/main.js',
+          name: 'app/bootstrap',
+          out: 'dist/js/main.min.js',
+          uglify2: {
+            output: {
+              beautify: true
+            },
+            compress: {
+              sequences: false,
+              global_defs: {
+                DEBUG: false
+              }
+            },
+            warnings: true,
+            mangle: false
+          },
+          done: function(done, output) {
+            var duplicates = require('rjs-build-analysis').duplicates(output);
+
+            if (duplicates.length > 0) {
+              grunt.log.subhead('Duplicates found in requirejs build:');
+              grunt.log.warn(duplicates);
+              done(new Error('r.js built duplicate modules, please check the excludes option.'));
+            }
+
+            done();
+          }
+        }
+      }
     }
 
   });
 
-  grunt.registerTask('build', ['clean:init', 'less', 'cssmin', 'copy:prepOptimize', 'copy:dist', 'clean:cleanup']);
+  grunt.registerTask('build', ['clean:init', 'less', 'cssmin', 'copy:prepOptimize', 'copy:dist', 'requirejs', 'clean:cleanup']);
 };

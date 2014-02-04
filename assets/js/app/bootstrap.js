@@ -1,8 +1,9 @@
 define([
   'jquery',
-  'angular'
+  'angular',
+  'modules/user/controllers/Display'
 ], function ($, angular) {
   $(function () {
-    angular.bootstrap(document, ['app']);
+    angular.bootstrap(document);
   });
 });

@@ -53,6 +53,12 @@ module.exports = function(grunt) {
           { cwd: 'assets', src: ['js/**'], dest: '.tmp/', expand: true }
         ]
       },
+      dev: {
+        files: [
+          { cwd: '.tmp', src: 'css/**', dest: 'dist/', expand: true },
+          { cwd: '.tmp', src: 'js/**', dest: 'dist/', expand: true }
+        ]
+      },
       dist: {
         files: [
           { src: ['assets/index.html'], dest: 'dist/index.html' },
@@ -97,5 +103,6 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('build', ['clean:init', 'less', 'cssmin', 'copy:prepOptimize', 'copy:dist', 'requirejs', 'clean:cleanup']);
+  grunt.registerTask('build-dev', ['clean:init', 'less', 'copy:prepOptimize', 'copy:dev', 'copy:dist', 'clean:cleanup']);
+  grunt.registerTask('build-prod', ['clean:init', 'less', 'cssmin', 'copy:prepOptimize', 'copy:dist', 'requirejs', 'clean:cleanup']);
 };

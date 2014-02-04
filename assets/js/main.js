@@ -1,7 +1,8 @@
 require.config({
-	baseUrl: '',
+	baseUrl: 'js',
 
 	paths: {
+		modules: 'app/modules',
 		nls: 'nls',
 		vendor: 'vendor',
 		angular: 'vendor/angular',

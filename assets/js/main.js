@@ -2,14 +2,13 @@ require.config({
 	baseUrl: 'js',
 
 	paths: {
+		templates: '../templates/main',
 		modules: 'app/modules',
 		nls: 'nls',
 		vendor: 'vendor',
 		angular: 'vendor/angular',
 		jquery: 'vendor/jquery',
 		bootstrap: 'vendor/bootstrap',
-		hgn: 'vendor/hgn',
-		text: 'vendor/text',
 		hogan: 'vendor/hogan'
 	},
 
@@ -27,10 +26,6 @@ require.config({
 		},
 
 		bootstrap: ['jquery']
-	},
-
-	hgn : {
-		templateExtension : '.tpl'
 	},
 
 	waitSeconds: 60,

@@ -1,9 +1,10 @@
 define([
   'jquery',
   'angular',
+  'templates',
   'modules/user/controllers/Display'
-], function ($, angular) {
+], function ($, angular, tpl) {
   $(function () {
-    angular.bootstrap(document);
+    console.log('bootstrapped');
   });
 });

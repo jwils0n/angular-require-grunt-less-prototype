@@ -5,11 +5,31 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-contrib-hogan');
 
   grunt.initConfig({
     clean: {
       init: ['dist'],
       cleanup: ['.tmp']
+    },
+
+    hogan: {
+      publish: {
+        options: {
+          prettify: true,
+          amdWrapper: true,
+          amdRequire: {
+            hogan: 'Hogan'
+          },
+          defaultName: function(path) {
+            var filename = path.split('/').pop(), len = filename.indexOf('.tpl');
+            return filename.substr(0, len);
+          }
+        },
+        files: {
+          'dist/templates/main.js': ['assets/templates/**/*.tpl']
+        }
+      }
     },
 
     less: {
@@ -46,9 +66,7 @@ module.exports = function(grunt) {
           { src: ['bower_components/angular/angular.js'], dest: '.tmp/js/vendor/angular.js' },
           { src: ['bower_components/jquery/jquery.js'], dest: '.tmp/js/vendor/jquery.js' },
           { src: ['bower_components/bootstrap/dist/js/bootstrap.js'], dest: '.tmp/js/vendor/bootstrap.js' },
-          { src: ['bower_components/requirejs-hogan-plugin/hgn.js'], dest: '.tmp/js/vendor/hgn.js' },
-          { src: ['bower_components/requirejs-hogan-plugin/hogan.js'], dest: '.tmp/js/vendor/hogan.js' },
-          { src: ['bower_components/requirejs-hogan-plugin/text.js'], dest: '.tmp/js/vendor/text.js' },
+          { src: ['bower_components/hogan/web/builds/2.0.0/hogan-2.0.0.js'], dest: '.tmp/js/vendor/hogan.js' },
           { src: ['bower_components/requirejs/require.js'], dest: '.tmp/js/require.js' },
           { cwd: 'assets', src: ['js/**'], dest: '.tmp/', expand: true }
         ]
@@ -103,6 +121,6 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('build-dev', ['clean:init', 'less', 'copy:prepOptimize', 'copy:dev', 'copy:dist', 'clean:cleanup']);
-  grunt.registerTask('build-prod', ['clean:init', 'less', 'cssmin', 'copy:prepOptimize', 'copy:dist', 'requirejs', 'clean:cleanup']);
+  grunt.registerTask('build-dev', ['clean:init', 'hogan', 'less', 'copy:prepOptimize', 'copy:dev', 'copy:dist', 'clean:cleanup']);
+  grunt.registerTask('build-prod', ['clean:init', 'hogan', 'less', 'cssmin', 'copy:prepOptimize', 'copy:dist', 'requirejs', 'clean:cleanup']);
 };

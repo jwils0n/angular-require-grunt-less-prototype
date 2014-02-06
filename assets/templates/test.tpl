@@ -1,0 +1,1 @@
+<p style="color:{{color}}">This is a test template</p>

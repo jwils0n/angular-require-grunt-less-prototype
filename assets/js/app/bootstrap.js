@@ -1,10 +1,7 @@
 define([
-  'jquery',
   'angular',
-  'templates',
   'modules/user/controllers/Display'
-], function ($, angular, tpl) {
-  $(function () {
-    console.log('bootstrapped');
-  });
+], function (angular) {
+  angular.module('cargame', []);
+  angular.bootstrap(document, ['cargame']);
 });

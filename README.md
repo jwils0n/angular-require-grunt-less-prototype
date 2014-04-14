@@ -1,6 +1,4 @@
-car-game
+Prototype for using Angular.js, Require.js, Grunt, and LESS
 ====================
 
-Building out an old childhood time waster game while driving on family vacations.
-
-It's more of an excuse to learn some Angular and how it works with Require, Grunt, Express, etc.
+A proof of concept for building a web app with technologies above.
